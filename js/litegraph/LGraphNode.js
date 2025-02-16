@@ -1,3 +1,6 @@
+import { LiteGraphBase as LiteGraph, isInsideRectangle } from "./LiteGraphBase";
+import LLink from "./LLink";
+
 // *************************************************************
 //   Node CLASS                                          *******
 // *************************************************************

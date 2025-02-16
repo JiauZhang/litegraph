@@ -1,3 +1,6 @@
+import { LiteGraphBase as LiteGraph} from "./LiteGraphBase";
+import LGraphGroup from "./LgraphGroup";
+
 //*********************************************************************************
 // LGraph CLASS
 //*********************************************************************************
@@ -104,28 +107,6 @@ LGraph.prototype.clear = function() {
     this.change();
 
     this.sendActionToCanvas("clear");
-};
-
-/**
- * Attach Canvas to this graph
- * @method attachCanvas
- * @param {GraphCanvas} graph_canvas
- */
-
-LGraph.prototype.attachCanvas = function(graphcanvas) {
-    if (graphcanvas.constructor != LGraphCanvas) {
-        throw "attachCanvas expects a LGraphCanvas instance";
-    }
-    if (graphcanvas.graph && graphcanvas.graph != this) {
-        graphcanvas.graph.detachCanvas(graphcanvas);
-    }
-
-    graphcanvas.graph = this;
-
-    if (!this.list_of_graphcanvas) {
-        this.list_of_graphcanvas = [];
-    }
-    this.list_of_graphcanvas.push(graphcanvas);
 };
 
 /**

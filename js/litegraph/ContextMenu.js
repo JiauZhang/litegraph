@@ -1,3 +1,5 @@
+import { LiteGraphBase as LiteGraph } from "./LiteGraphBase";
+
 /* LiteGraph GUI elements used for canvas editing *************************************/
 
 /**
