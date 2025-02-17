@@ -88,8 +88,10 @@ LiteGraph.registerNodeType("basic/watch", Watch);
 
 onMounted(() => {
 var graph = new LGraph();
-
-var canvas = new LGraphCanvas("#mycanvas", graph);
+window.graphcanvas = new LGraphCanvas("#mycanvas", graph);
+window.canvas = document.getElementById("mycanvas");
+window.canvas.width = window.innerWidth;
+window.canvas.height = window.innerHeight;
 
 var node_const = LiteGraph.createNode("basic/const");
 node_const.pos = [200,200];
@@ -104,8 +106,14 @@ node_const.connect(0, node_watch, 0 );
 
 graph.start()
 });
+
+window.addEventListener('resize', function() {
+    window.canvas.width = window.innerWidth;
+    window.canvas.height = window.innerHeight;
+    window.graphcanvas.resize();
+});
 </script>
 
 <template>
-    <canvas id='mycanvas' width='1024' height='512' style='border: 1px solid'></canvas>
+    <canvas id='mycanvas' width='0' height='0' style='border: 1px solid'></canvas>
 </template>
