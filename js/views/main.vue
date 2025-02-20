@@ -88,10 +88,11 @@ LiteGraph.registerNodeType("basic/watch", Watch);
 
 onMounted(() => {
 var graph = new LGraph();
-window.graphcanvas = new LGraphCanvas("#mycanvas", graph);
+window.canvas_container = document.getElementById('canvas-container');
 window.canvas = document.getElementById("mycanvas");
-window.canvas.width = window.innerWidth;
-window.canvas.height = window.innerHeight;
+window.graphcanvas = new LGraphCanvas(window.canvas, graph, {autoresize: true});
+window.canvas.width = window.canvas_container.clientWidth;
+window.canvas.height = window.canvas_container.clientHeight;
 
 var node_const = LiteGraph.createNode("basic/const");
 node_const.pos = [200,200];
@@ -107,13 +108,11 @@ node_const.connect(0, node_watch, 0 );
 graph.start()
 });
 
-window.addEventListener('resize', function() {
-    window.canvas.width = window.innerWidth;
-    window.canvas.height = window.innerHeight;
-    window.graphcanvas.resize();
-});
+window.addEventListener('resize', () => { window.graphcanvas.resize(); });
 </script>
 
 <template>
-    <canvas id='mycanvas' width='0' height='0' style='border: 1px solid'></canvas>
+    <div id="canvas-container" class="w-full h-screen">
+        <canvas id='mycanvas' width='100%' height='100%'></canvas>
+    </div>
 </template>
