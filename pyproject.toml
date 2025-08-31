@@ -22,10 +22,15 @@ keywords = [
 ]
 requires-python = ">= 3.10"
 dependencies = [
+    "fastapi>=0.116.0",
+    "uvicorn",
 ]
 
 [project.urls]
 Homepage = "https://github.com/jiauzhang/litegraph"
+
+[project.scripts]
+litegraph = "litegraph.__main__:main"
 
 [tool.hatch.version]
 path = "litegraph/version.py"
