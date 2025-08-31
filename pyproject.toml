@@ -1,10 +1,6 @@
 [build-system]
-requires = [
-    "build",
-    "setuptools >= 42",
-    "wheel",
-]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
 
 [project]
 name = "litegraph"
@@ -17,25 +13,38 @@ authors = [
 classifiers = [
     'Intended Audience :: Developers',
     'Topic :: Scientific/Engineering :: Artificial Intelligence',
-    'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
-    'Programming Language :: Python :: 3.8',
+    'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+    'Programming Language :: Python :: 3.10',
 ]
 keywords = [
     'Deep Learning',
     'Artificial Intelligence',
 ]
-requires-python = ">= 3.8"
+requires-python = ">= 3.10"
 dependencies = [
 ]
 
 [project.urls]
 Homepage = "https://github.com/jiauzhang/litegraph"
 
-[tool.setuptools]
-package-dir = {"litegraph" = "litegraph"}
+[tool.hatch.version]
+path = "litegraph/version.py"
 
-[tool.setuptools.dynamic]
-version = {attr = "litegraph.__version__"}
+[tool.hatch.build.targets.sdist]
+include = [
+    ".github", "LICENSE", "*.*",
+    "litegraph", "js",
+]
+exclude = ["dist", "js/dist"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["litegraph"]
+force-include = { "js/dist" = "litegraph/js/dist" }
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.4",
+]
 
 [tool.pytest.ini_options]
 minversion = "8.0"

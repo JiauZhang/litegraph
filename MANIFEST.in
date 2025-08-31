@@ -1,7 +1,0 @@
-include *.*
-include LICENSE
-recursive-include litegraph *.*
-recursive-include js *.*
-prune */__pycache__
-prune */node_modules
-global-exclude *.o *.so *.dylib *.a .git *.pyc *.swp
