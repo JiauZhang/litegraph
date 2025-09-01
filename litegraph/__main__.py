@@ -29,3 +29,6 @@ def main():
     if args.host: params['host'] = '0.0.0.0'
 
     uvicorn.run(app, **params)
+
+if __name__ == '__main__':
+    main()
