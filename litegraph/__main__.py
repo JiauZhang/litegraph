@@ -1,8 +1,9 @@
 import os, argparse
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import uvicorn
+from typing import List
 
 def main():
     parser = argparse.ArgumentParser()
@@ -13,6 +14,33 @@ def main():
     app = FastAPI()
     dist_dir = os.path.join(os.path.dirname(__file__), "js/dist")
     app.mount("/static", StaticFiles(directory=os.path.join(dist_dir, "assets")), name="static")
+
+    # store all active websocket connections
+    active_connections: List[WebSocket] = []
+
+    # websocket endpoint for bidirectional communication
+    @app.websocket("/ws")
+    async def websocket_endpoint(websocket: WebSocket):
+        # accept client connection
+        await websocket.accept()
+        # add new connection to active connections list
+        active_connections.append(websocket)
+        print(f"New client connected, current connections: {len(active_connections)}")
+
+        try:
+            while True:
+                # wait for message from client
+                data = await websocket.receive_text()
+                print(f"Received message: {data}")
+                await websocket.send_text(f"Server received: {data}")
+        except WebSocketDisconnect:
+            # remove from list when client disconnects
+            active_connections.remove(websocket)
+            print(f"Client disconnected, current connections: {len(active_connections)}")
+        except Exception as e:
+            print(f"WebSocket error: {str(e)}")
+            if websocket in active_connections:
+                active_connections.remove(websocket)
 
     @app.get("/")
     async def serve_index():

@@ -3,6 +3,17 @@
 pip install litegraph
 ```
 
+### Usage
+```shell
+litegraph --port 6006 --host
+```
+
+### Build
+```shell
+pnpm run build
+python -m pip install . --no-build-isolation
+```
+
 ### Sponsor
 <table align="center">
     <thead>

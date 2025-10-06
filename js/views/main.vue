@@ -87,6 +87,30 @@ Watch.prototype.onDrawBackground = function(ctx) {
 LiteGraph.registerNodeType("basic/watch", Watch);
 
 onMounted(() => {
+const ws = new WebSocket(`ws://${window.location.host}/ws`);
+
+ws.onopen = () => {
+    console.log('WebSocket connection established');
+    ws.send('Client connected');
+};
+ws.onmessage = (event) => {
+    console.log('Received message from server:', event.data);
+};
+ws.onclose = () => {
+    console.log('WebSocket connection closed');
+};
+ws.onerror = (error) => {
+    console.error('WebSocket error:', error);
+};
+
+function sendMessage(message) {
+    if (ws.readyState === WebSocket.OPEN) {
+        ws.send(message);
+    } else {
+        console.error('WebSocket connection is not open, unable to send message');
+    }
+}
+
 var graph = new LGraph();
 window.canvas_container = document.getElementById('canvas-container');
 window.canvas = document.getElementById("mycanvas");
